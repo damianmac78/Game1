@@ -22,13 +22,13 @@ namespace Game1
             }
         }
 
-
-
         private int MaxX { get; set; }
         private int MaxY { get; set; }
 
         public int PosX { get; set; }
         public int PosY { get; set; }
+
+        public Vector2 Position { get; set; }
 
         public Texture2D Texture { get; set; }        
         internal string PathToSkin { get; private set; }
@@ -70,21 +70,28 @@ namespace Game1
             Position = new Vector2(PosX, PosY);
         }
         
-        public void Move(int xPos, int yPos, MouseState mouseState)
+        public void TrackMouse(MouseState mouseState)
+        {
+            
+            if(mouseState.X > PosX)            
+                PosX += 1;            
+
+            if(mouseState.X < PosX)            
+                PosX -= 1;            
+
+            if(mouseState.Y > PosY)            
+                PosY += 1;
+
+            if (mouseState.Y < PosY)
+                PosY -= 1;
+
+            Position = new Vector2(PosX, PosY);
+        }
+
+        public void Move(int xPos, int yPos)
         {
             PosX = xPos;
             PosY = yPos;
-
-            // below ca make track mouse left or right as they fall
-            //if(mouseState.X > PosX)
-            //{
-            //    PosX += 1;
-            //}
-            
-            //if(mouseState.X < PosX)
-            //{
-            //    PosX -= 1;
-            //}
 
             if(xPos < 0 || xPos > MaxX)
             {               
@@ -100,8 +107,6 @@ namespace Game1
             Position = new Vector2(PosX, PosY);
         }
 
-        public Vector2 Position { get; set; }
-
-
+        
     }
 }

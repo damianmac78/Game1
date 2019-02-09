@@ -15,19 +15,21 @@ namespace Game1
         SpriteBatch spriteBatch;
 
         private List<Dot> dotList = new List<Dot>();
-        
-        private void SpawnObjects()
-        {
-            for (int i = 0; i < 6000; i++)
-            {
-                dotList.Add(new Dot(1024, 768));
-            }
-        } 
+
+        private Ship spaceShip = new Ship(1024, 768);
+
+        //private void SpawnObjects()
+        //{
+        //    for (int i = 0; i < 100; i++)
+        //    {
+        //        dotList.Add(new Dot(1024, 768));
+        //    }
+        //} 
         
 
         //textures
-        Texture2D spaceshipTexture;
-        Texture2D greenBlob;
+        //Texture2D spaceshipTexture;
+        //Texture2D greenBlob;
 
 
         public Game1()
@@ -67,19 +69,20 @@ namespace Game1
         /// </summary>
         protected override void LoadContent()
         {
-            SpawnObjects();
+            //SpawnObjects();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here            
-            spaceshipTexture = LoadTextureFromStream("Content/spaceShip.png");
-            greenBlob = LoadTextureFromStream("Content/green.png");
-           
+            //spaceshipTexture = LoadTextureFromStream("Content/spaceShip.png");
+            //greenBlob = LoadTextureFromStream("Content/green.png");
 
-            foreach (var dot in dotList)
-            {
-                dot.Texture = LoadTextureFromStream(dot.PathToSkin);
-            }
+            spaceShip.Texture = LoadTextureFromStream(spaceShip.PathToSkin);
+
+            //foreach (var dot in dotList)
+            //{
+            //    dot.Texture = LoadTextureFromStream(dot.PathToSkin);
+            //}
 
             //dot.Texture = LoadTextureFromStream(dot.PathToSkin);
                        
@@ -105,13 +108,14 @@ namespace Game1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            var mouseState = Mouse.GetState();
-            
             // TODO: Add your update logic here
-            foreach (var dot in dotList)
-            {
-                dot.Move(dot.PosX, dot.PosY + 1, mouseState);
-            }
+
+            spaceShip.TrackMouse(Mouse.GetState());
+            //foreach (var dot in dotList)
+            //{
+            //    //dot.Move(dot.PosX, dot.PosY + 1, mouseState);
+            //    dot.TrackMouse(Mouse.GetState());
+            //}
 
 
             base.Update(gameTime);
@@ -126,10 +130,12 @@ namespace Game1
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
-            foreach(var dot in dotList)
-            {
-                spriteBatch.Draw(dot.Texture, dot.Position, Color.White);
-            }
+            spriteBatch.Draw(spaceShip.Texture, spaceShip.Position, Color.White);
+
+            //foreach(var dot in dotList)
+            //{
+            //    spriteBatch.Draw(dot.Texture, dot.Position, Color.White);
+            //}
 
             //spriteBatch.Draw(dot.Texture, dot.Position, Color.White);
             
